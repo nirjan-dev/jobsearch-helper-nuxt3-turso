@@ -20,6 +20,7 @@ COPY --link . .
 RUN pnpm run build
 RUN pnpm prune
 
+# Run
 FROM base
 
 ENV PORT=$PORT
