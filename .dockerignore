@@ -2,6 +2,8 @@
 /.nuxt
 /.output
 /node_modules
+.git
+.vscode/
 
 .gitignore
 README.md

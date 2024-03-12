@@ -15,7 +15,7 @@ FROM base as build
 
 COPY --link package.json pnpm-lock.yaml .
 RUN npm install -g pnpm
-RUN pnpm install
+RUN pnpm install --prod=false
 
 COPY --link . .
 
