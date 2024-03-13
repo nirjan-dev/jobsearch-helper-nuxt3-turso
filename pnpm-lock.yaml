@@ -8,6 +8,9 @@ dependencies:
   nuxt:
     specifier: ^3.10.3
     version: 3.10.3(@types/node@20.11.25)(eslint@8.57.0)(stylelint@16.2.1)(typescript@5.4.2)(vite@5.1.5)
+  primeicons:
+    specifier: ^6.0.1
+    version: 6.0.1
   primevue:
     specifier: ^3.49.1
     version: 3.49.1(vue@3.4.21)
@@ -7913,6 +7916,10 @@ packages:
   /pretty-bytes@6.1.1:
     resolution: {integrity: sha512-mQUvGU6aUFQ+rNvTIAcZuWGRT9a6f6Yrg9bHs4ImKF+HZCEK+plBvnAZYSIQztknZF2qnzNtr6F8s0+IuptdlQ==}
     engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
+
+  /primeicons@6.0.1:
+    resolution: {integrity: sha512-KDeO94CbWI4pKsPnYpA1FPjo79EsY9I+M8ywoPBSf9XMXoe/0crjbUK7jcQEDHuc0ZMRIZsxH3TYLv4TUtHmAA==}
     dev: false
 
   /primevue@3.49.1(vue@3.4.21):
