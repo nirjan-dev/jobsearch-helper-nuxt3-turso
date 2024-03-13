@@ -50,7 +50,7 @@
     "stylelint-high-performance-animation": "^1.9.0"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": [
+    "*/*.{js,ts,vue}": [
       "stylelint \"**/*.{css,scss,vue}\" --fix",
       "prettier --write",
       "eslint --fix"

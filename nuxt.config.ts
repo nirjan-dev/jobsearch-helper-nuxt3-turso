@@ -13,4 +13,3 @@ export default defineNuxtConfig({
     importPT: { from: path.resolve(__dirname, "./presets/wind/") }, //import and apply preset
   },
 });
-https;
