@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "nuxt": "^3.10.3",
+    "primevue": "^3.49.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0"
   },
@@ -25,6 +26,7 @@
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/stylelint-module": "^5.2.0",
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.57.0",
@@ -40,6 +42,7 @@
     "eslint-plugin-write-good-comments": "^0.2.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "nuxt-primevue": "^0.3.1",
     "prettier": "3.2.5",
     "stylelint": "^16.2.1",
     "stylelint-config-recommended-vue": "^1.5.0",

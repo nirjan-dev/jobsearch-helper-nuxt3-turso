@@ -1,2 +1,4 @@
 node_modules
 nuxt.config.ts
+presets/**/*.js
+tailwind.config.ts

@@ -1,0 +1,2 @@
+presets/**/*.js
+tailwind.config.ts
