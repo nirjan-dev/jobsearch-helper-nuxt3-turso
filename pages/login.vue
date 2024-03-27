@@ -1,7 +1,7 @@
 <!-- eslint-disable vuejs-accessibility/label-has-for -->
 <template>
   <div class="flex justify-center">
-    <Card class="max-w-40 p-3">
+    <Card class="max-w-80 p-3">
       <template #header>
         <h1 class="pb-2">Login to your account</h1>
       </template>
