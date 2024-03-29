@@ -56,7 +56,6 @@ export const $larafetch = $fetch.create({
     }
   },
 });
-TODO;
 
 async function initCsrf() {
   const { backendUrl } = useRuntimeConfig().public;

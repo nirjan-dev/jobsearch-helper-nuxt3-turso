@@ -52,10 +52,10 @@
   },
   "lint-staged": {
     "*/*.{js,ts,vue}": [
-      "eslint --fix",
-      "stylelint \"**/*.{css,scss,vue}\" --fix",
-      "prettier --write"
-    ]
+      "eslint",
+      "prettier"
+    ],
+    "*/*/{vue,css,scss}": "stylelint \"**/*.{css,scss,vue}\""
   },
   "config": {
     "commitizen": {
