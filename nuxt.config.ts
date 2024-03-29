@@ -15,8 +15,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      backendUrl: process.env.BACKEND_URL || "http://127.0.0.1:8001",
-      frontendUrl: process.env.FRONTEND_URL || "http://127.0.0.1:3000",
+      backendUrl: "",
+      frontendUrl: "",
     },
   },
 

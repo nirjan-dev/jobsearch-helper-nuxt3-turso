@@ -17,8 +17,8 @@ min_machines_running = 1
 processes = ['app']
 
 [env]
-BACKEND_URL = "https://jobsearch-api.nirjan.net"
-FRONTEND_URL = "https://jobsearch.nirjan.net"
+NUXT_PUBLIC_BACKEND_URL = "https://jobsearch-api.nirjan.net"
+NUXT_PUBLIC_FRONTEND_URL = "https://jobsearch.nirjan.net"
 
 [[vm]]
 size = 'shared-cpu-1x'
