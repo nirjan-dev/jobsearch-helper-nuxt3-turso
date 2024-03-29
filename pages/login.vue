@@ -21,9 +21,16 @@
         <p class="my-6 text-center">or continue with</p>
         <hr class="my-6" />
         <div class="flex gap-2 justify-center">
-          <Button icon="pi pi-google" aria-label="Continue with Google" />
-          <Button icon="pi pi-github" aria-label="Continue with Github" />
-          <Button icon="pi pi-linkedin" aria-label="Continue with LinkedIn" />
+          <Button
+            icon="pi pi-google"
+            aria-label="Continue with Google"
+            @click="navigateTo(googleLoginLink, { external: true })"
+          />
+          <Button
+            icon="pi pi-github"
+            aria-label="Continue with Github"
+            @click="navigateTo(githubLoginLink, { external: true })"
+          />
         </div>
       </template>
     </Card>
@@ -32,4 +39,8 @@
 
 <script setup lang="ts">
 const email = ref("");
+const backendAPIPath = useRuntimeConfig().public.backendUrl;
+
+const githubLoginLink = backendAPIPath + "/auth/redirect/github";
+const googleLoginLink = backendAPIPath + "/auth/redirect/google";
 </script>

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "start": "nuxt start",
     "dev:docker": "docker compose -f docker-compose.dev.yml up --build",
     "generate": "nuxt generate",
@@ -52,9 +52,9 @@
   },
   "lint-staged": {
     "*/*.{js,ts,vue}": [
+      "eslint --fix",
       "stylelint \"**/*.{css,scss,vue}\" --fix",
-      "prettier --write",
-      "eslint --fix"
+      "prettier --write"
     ]
   },
   "config": {

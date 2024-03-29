@@ -11,7 +11,7 @@
       </template>
 
       <template #end>
-        <Button>
+        <Button v-if="!user">
           <NuxtLink class="mx-3 inline-block" to="/login">
             <span class="flex items-center justify-center gap-2">
               <span :class="PrimeIcons.USER"></span>
@@ -19,6 +19,15 @@
             </span>
           </NuxtLink>
         </Button>
+
+        <Button
+          v-else
+          outlined
+          style="padding: 0"
+          label="logout"
+          @click="logout"
+          ><span class="px-3 py-2">Logout</span></Button
+        >
       </template>
     </Menubar>
   </div>
@@ -27,6 +36,8 @@
 <script setup lang="ts">
 import type { MenuItem } from "primevue/menuitem";
 import { PrimeIcons } from "primevue/api";
+
+const { user, logout } = useAuth();
 
 const items = ref<MenuItem[]>([
   {
