@@ -8,7 +8,6 @@ export type User = {
 
 export type LoginCredentials = {
   email: string;
-  password: string;
 };
 
 export type RegisterCredentials = {
@@ -47,11 +46,18 @@ export function useAuth<T = User>() {
     }
   }
 
-  async function login(credentials: LoginCredentials) {
-    if (isLoggedIn.value) return;
+  async function loginLinkRequest(
+    credentials: LoginCredentials,
+  ): Promise<Boolean> {
+    if (isLoggedIn.value) return false;
 
-    await $larafetch("/login", { method: "post", body: credentials });
-    await refresh();
+    try {
+      await $larafetch("/login", { method: "post", body: credentials });
+
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   async function register(credentials: RegisterCredentials) {
@@ -109,7 +115,7 @@ export function useAuth<T = User>() {
   return {
     user,
     isLoggedIn,
-    login,
+    loginLinkRequest,
     register,
     resendEmailVerification,
     logout,

@@ -27,21 +27,18 @@ export function usePaginatedLarafetch<T>(
     const newCollection = response.data.value?.data || [];
     // TODO: find a better way to replace any
     collection.value = newCollection as any;
-    TODO;
     loading.value = false;
   }
 
   async function handleSort(event: { sortField: string; sortOrder: number }) {
     loading.value = true;
     const sortOrder = event.sortOrder === -1 ? "desc" : "asc";
-    sortOrderevent.sortOrder - 1;
     const response = await useLarafetch<PaginatedResource>(
       `${url}?orderBy=${event.sortField}&direction=${sortOrder}`,
     );
     const newCollection = response.data.value?.data || [];
     // TODO: find a better way to replace any
     collection.value = newCollection as any;
-    TODO;
     loading.value = false;
   }
 
@@ -53,7 +50,6 @@ export function usePaginatedLarafetch<T>(
     const newCollection = response.data.value?.data || [];
     // TODO: find a better way to replace any
     collection.value = newCollection as any;
-    TODO;
     total.value = response.data.value?.total || 0;
     perPage.value = response.data.value?.per_page || 0;
     loading.value = false;
@@ -65,7 +61,6 @@ export function usePaginatedLarafetch<T>(
     const newCollection = response.data.value?.data || [];
     // TODO: find a better way to replace any
     collection.value = newCollection as any;
-    TODO;
     total.value = response.data.value?.total || 0;
     perPage.value = response.data.value?.per_page || 0;
     loading.value = false;

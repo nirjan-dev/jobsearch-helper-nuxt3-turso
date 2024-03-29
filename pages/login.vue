@@ -6,7 +6,7 @@
         <h1 class="pb-2">Login to your account</h1>
       </template>
       <template #content>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit="handleLoginRequest">
           <div class="grid gap-2">
             <label for="email">Email</label>
             <InputText
@@ -14,6 +14,7 @@
               v-model="email"
               type="email"
               placeholder="Email"
+              required
             />
           </div>
           <Button class="w-full" type="submit">Continue with email</Button>
@@ -43,4 +44,31 @@ const backendAPIPath = useRuntimeConfig().public.backendUrl;
 
 const githubLoginLink = backendAPIPath + "/auth/redirect/github";
 const googleLoginLink = backendAPIPath + "/auth/redirect/google";
+
+const { loginLinkRequest } = useAuth();
+const toast = useToast();
+
+async function handleLoginRequest(event: SubmitEvent) {
+  event.preventDefault();
+
+  const success = await loginLinkRequest({ email: email.value });
+
+  if (success) {
+    toast.add({
+      life: 3000,
+      severity: "success",
+      summary: "Success",
+      detail: "Check your email for login link",
+    });
+
+    email.value = "";
+  } else {
+    toast.add({
+      life: 3000,
+      severity: "error",
+      summary: "Error",
+      detail: "Could not send login link",
+    });
+  }
+}
 </script>
