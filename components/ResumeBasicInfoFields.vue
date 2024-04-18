@@ -12,6 +12,17 @@
   </div>
 
   <div>
+    <label for="role">Role</label>
+
+    <InputText
+      id="role"
+      v-model="resumeFormModel.role"
+      class="w-full"
+      type="text"
+    />
+  </div>
+
+  <div>
     <label for="email">Email</label>
 
     <InputText
@@ -62,6 +73,7 @@ const resumeFormModel = defineModel("resumeFormModel", {
   type: Object as PropType<{
     name: string;
     email: string;
+    role: string;
     phone: string;
     location: string;
     summary: string;

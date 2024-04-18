@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@nuxtjs/stylelint-module",
     "@nuxtjs/tailwindcss",
     "nuxt-primevue",
+    "@pinia/nuxt",
   ],
   primevue: {
     unstyled: true,

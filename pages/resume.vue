@@ -1,40 +1,13 @@
 <template>
   <div>
-    <ResumeEditForm v-model:resumeFormModel="resumeFormModel" />
+    <ResumeEditForm
+      v-model:resumeFormModel="resumeFormModel"
+      @on-form-save="resumeStore.updateResume"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-const resumeFormModel = ref<any>({
-  name: "",
-  role: "",
-  summary: "",
-  email: "",
-  location: "",
-  phone: "",
-  links: [
-    {
-      title: "",
-      url: "",
-    },
-  ],
-  skills: [],
-  jobs: [
-    {
-      companyName: "",
-      startDate: "",
-      endDate: "",
-      role: "",
-      useMainRole: false,
-      accomplishments: "",
-    },
-  ],
-  projects: [
-    {
-      title: "",
-      description: "",
-      link: "",
-    },
-  ],
-});
+const resumeStore = useResumeStore();
+const resumeFormModel = resumeStore.resume;
 </script>

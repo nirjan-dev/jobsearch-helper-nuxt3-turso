@@ -15,6 +15,10 @@
               type="text"
             />
           </div>
+          <AccomplishmentFields
+            v-model:accomplishments="job.accomplishments"
+            :job-index="index"
+          />
           <div>
             <label :for="`startDate-${index}`">Start Date</label>
             <Calendar
@@ -49,16 +53,7 @@
               type="text"
             />
           </div>
-          <div>
-            <label :for="`accomplishments-${index}`">Accomplishments</label>
-            <Textarea
-              :id="`accomplishments-${index}`"
-              v-model="job.accomplishments"
-              class="w-full"
-              rows="8"
-              auto-resize
-            />
-          </div>
+
           <div class="flex gap-2">
             <Button
               severity="danger"
@@ -74,7 +69,7 @@
               aria-label="Add Job"
               @click="
                 jobs.push({
-                  accomplishments: '',
+                  accomplishments: [''],
                   companyName: '',
                   endDate: '',
                   role: '',
@@ -96,7 +91,7 @@
         aria-label="Add Job"
         @click="
           jobs.push({
-            accomplishments: '',
+            accomplishments: [''],
             companyName: '',
             endDate: '',
             role: '',
@@ -119,7 +114,7 @@ const jobs = defineModel("jobs", {
       endDate: string;
       role: string;
       useMainRole: boolean;
-      accomplishments: string;
+      accomplishments: string[];
     }[]
   >,
 });
