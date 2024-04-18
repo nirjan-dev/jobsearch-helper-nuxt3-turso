@@ -51,6 +51,11 @@ const items = ref<MenuItem[]>([
     url: "/apply",
   },
   {
+    label: "Resume",
+    icon: PrimeIcons.FILE_EDIT,
+    url: "/resume",
+  },
+  {
     label: "Applications",
     icon: PrimeIcons.LIST,
     url: "/applications",
