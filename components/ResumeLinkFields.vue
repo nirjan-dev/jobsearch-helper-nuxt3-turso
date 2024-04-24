@@ -21,7 +21,11 @@
             v-model="link.url"
             class="w-full"
             type="text"
+            :invalid="!link.url.startsWith('https://')"
           />
+          <small v-if="!link.url.startsWith('https://')" class="text-red-300"
+            ><i class="pi pi-info-circle"></i> Please include https://</small
+          >
         </div>
         <div class="flex gap-2">
           <Button

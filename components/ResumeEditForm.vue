@@ -24,7 +24,7 @@
         <ResumeJobFields v-model:jobs="resumeFormModel.jobs" />
 
         <ResumeProjectFields v-model:projects="resumeFormModel.projects" />
-        <div>
+        <div class="flex gap-2">
           <Button
             size="large"
             label="Save"
@@ -34,6 +34,10 @@
             :loading="isResumeSaving"
             @click="emit('onFormSave')"
           />
+
+          <Button size="large" outlined type="button">
+            <NuxtLink to="/apply">Apply to Jobs</NuxtLink>
+          </Button>
         </div>
       </form>
     </template>

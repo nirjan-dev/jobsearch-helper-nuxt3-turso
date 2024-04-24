@@ -31,7 +31,13 @@
             v-model="project.link"
             class="w-full"
             type="text"
+            :invalid="!project.link.startsWith('https://')"
           />
+          <small
+            v-if="!project.link.startsWith('https://')"
+            class="text-red-300"
+            ><i class="pi pi-info-circle"></i> Please include https://</small
+          >
         </div>
 
         <div class="flex gap-2">
