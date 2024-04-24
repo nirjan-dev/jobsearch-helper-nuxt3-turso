@@ -5,8 +5,9 @@ export interface Link {
 
 export interface Job {
   companyName: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
+  isCurrentJob: boolean;
   role: string;
   useMainRole: boolean;
   accomplishments: string[];

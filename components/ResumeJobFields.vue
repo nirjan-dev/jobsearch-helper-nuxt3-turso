@@ -5,7 +5,8 @@
 
     <template v-if="jobs.length">
       <div v-for="(job, index) in jobs" :key="index">
-        <div class="grid gap-2 mb-2">
+        <h3>Job #{{ index + 1 }}</h3>
+        <div class="grid gap-2 mb-6">
           <div>
             <label :for="`company-name-${index}`">Company Name</label>
             <InputText
@@ -29,6 +30,16 @@
             />
           </div>
           <div>
+            <label class="flex items-center gap-2"
+              >Still working here?
+
+              <InputSwitch
+                v-model="job.isCurrentJob"
+                :input-id="`stillWorkingHere-${index}`"
+              />
+            </label>
+          </div>
+          <div v-if="!job.isCurrentJob">
             <label :for="`endDate-${index}`">End Date</label>
             <Calendar
               :id="`endDate-${index}`"
@@ -57,27 +68,18 @@
           <div class="flex gap-2">
             <Button
               severity="danger"
-              icon="pi pi-trash"
               :aria-label="`Delete Job ${index + 1}`"
               type="button"
               @click="jobs.splice(index, 1)"
-            />
+              >Remove Job</Button
+            >
             <Button
               type="button"
-              icon="pi pi-plus"
               severity="info"
               aria-label="Add Job"
-              @click="
-                jobs.push({
-                  accomplishments: [''],
-                  companyName: '',
-                  endDate: '',
-                  role: '',
-                  startDate: '',
-                  useMainRole: false,
-                })
-              "
-            />
+              @click="addNewJob"
+              >Add Job</Button
+            >
           </div>
         </div>
       </div>
@@ -89,33 +91,29 @@
         icon="pi pi-plus"
         severity="info"
         aria-label="Add Job"
-        @click="
-          jobs.push({
-            accomplishments: [''],
-            companyName: '',
-            endDate: '',
-            role: '',
-            startDate: '',
-            useMainRole: false,
-          })
-        "
+        @click="addNewJob"
       />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { Job } from "~/types/resume.types";
+
 const jobs = defineModel("jobs", {
   required: true,
-  type: Array as PropType<
-    {
-      companyName: string;
-      startDate: string;
-      endDate: string;
-      role: string;
-      useMainRole: boolean;
-      accomplishments: string[];
-    }[]
-  >,
+  type: Array as PropType<Job[]>,
 });
+
+function addNewJob() {
+  jobs.value.push({
+    accomplishments: [""],
+    companyName: "",
+    endDate: new Date(),
+    role: "",
+    startDate: new Date(),
+    useMainRole: false,
+    isCurrentJob: false,
+  });
+}
 </script>

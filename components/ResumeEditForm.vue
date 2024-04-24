@@ -24,8 +24,17 @@
         <ResumeJobFields v-model:jobs="resumeFormModel.jobs" />
 
         <ResumeProjectFields v-model:projects="resumeFormModel.projects" />
-
-        <Button type="button" @click="emit('onFormSave')">Save</Button>
+        <div>
+          <Button
+            size="large"
+            label="Save"
+            type="button"
+            icon="pi pi-save"
+            icon-pos="right"
+            :loading="isResumeSaving"
+            @click="emit('onFormSave')"
+          />
+        </div>
       </form>
     </template>
   </Card>
@@ -38,6 +47,8 @@ const resumeFormModel = defineModel("resumeFormModel", {
   required: true,
   type: Object as PropType<Resume>,
 });
+
+defineProps<{ isResumeSaving: boolean }>();
 
 const emit = defineEmits<{
   onFormSave: [];
