@@ -13,10 +13,21 @@ export interface Job {
   accomplishments: string[];
 }
 
+export interface ResumePreviewJob extends Omit<Job, "accomplishments"> {
+  accomplishments: {
+    name: string;
+    isEnabled: boolean;
+  }[];
+}
+
 export interface Project {
   title: string;
   description: string;
   link: string;
+}
+
+export interface ResumePreviewProject extends Project {
+  isEnabled: boolean;
 }
 
 export interface Resume {
@@ -30,4 +41,16 @@ export interface Resume {
   skills: string[];
   jobs: Job[];
   projects: Project[];
+}
+
+export interface ResumePreview
+  extends Omit<Resume, "skills" | "jobs" | "projects"> {
+  skills: {
+    name: string;
+    isEnabled: boolean;
+  }[];
+
+  jobs: ResumePreviewJob[];
+
+  projects: ResumePreviewProject[];
 }

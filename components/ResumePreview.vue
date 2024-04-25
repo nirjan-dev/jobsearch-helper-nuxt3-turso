@@ -1,5 +1,8 @@
 <template>
-  <div id="resume-preview" class="mx-auto px-6 py-4">
+  <div
+    id="resume-preview"
+    class="mx-auto px-6 py-4 max-h-[89vh] overflow-auto sticky top-0"
+  >
     <div class="grid mb-4">
       <h2 class="text-center text-4xl font-bold">{{ resume.name }}</h2>
       <h3 class="text-center text-xl font-medium">{{ resume.role }}</h3>
@@ -29,9 +32,9 @@
       <section class="grid gap-1">
         <h3>Skills</h3>
         <ul v-if="resume?.skills?.length > 0" class="flex flex-wrap gap-5">
-          <template v-for="skill in resume.skills" :key="skill">
-            <li :v-if="skill">
-              {{ skill }}
+          <template v-for="skill in resume.skills" :key="skill.name">
+            <li v-if="skill.isEnabled">
+              {{ skill.name }}
             </li>
           </template>
         </ul>
@@ -53,12 +56,14 @@
             v-if="job.accomplishments?.length > 0"
             class="list-inside list-disc my-4"
           >
-            <li
+            <template
               v-for="accomplishment in job.accomplishments"
-              :key="accomplishment"
+              :key="accomplishment.name"
             >
-              {{ accomplishment }}
-            </li>
+              <li v-if="accomplishment.isEnabled">
+                {{ accomplishment.name }}
+              </li>
+            </template>
           </ul>
         </article>
       </section>
@@ -67,26 +72,24 @@
         class="grid gap-1"
       >
         <h3>Projects</h3>
-        <article
-          v-for="project in resume.projects"
-          :key="project.link"
-          class="grid"
-        >
-          <h4 class="text-xl">
-            <a :href="project.link">{{ project.title }}</a>
-          </h4>
-          <h5 class="font-normal">{{ project.description }}</h5>
-        </article>
+        <template v-for="project in resume.projects" :key="project.link">
+          <article v-if="project.isEnabled" class="grid">
+            <h4 class="text-xl">
+              <a :href="project.link">{{ project.title }}</a>
+            </h4>
+            <h5 class="font-normal">{{ project.description }}</h5>
+          </article>
+        </template>
       </section>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { Resume } from "~/types/resume.types";
+import type { ResumePreview } from "~/types/resume.types";
 
 defineProps<{
-  resume: Resume;
+  resume: ResumePreview;
 }>();
 
 function formatDate(date: Date | string) {

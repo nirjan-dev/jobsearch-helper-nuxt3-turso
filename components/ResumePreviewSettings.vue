@@ -4,10 +4,17 @@
       <h2 class="mb-4 flex justify-between text-xl font-bold">
         Resume Preview Settings
       </h2>
+
+      <resume-preview-form v-model:resume-preview-model="resumePreviewModel" />
     </template>
   </Card>
 </template>
 
-<script lang="ts" setup></script>
+<script setup lang="ts">
+import type { ResumePreview } from "~/types/resume.types";
 
-<style></style>
+const resumePreviewModel = defineModel("resumePreviewModel", {
+  type: Object as PropType<ResumePreview>,
+  required: true,
+});
+</script>
