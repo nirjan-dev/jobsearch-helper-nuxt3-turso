@@ -2,13 +2,13 @@ import path from "path";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  ssr: false,
   modules: [
     "@nuxtjs/eslint-module",
     "@nuxtjs/stylelint-module",
     "@nuxtjs/tailwindcss",
     "nuxt-primevue",
     "@pinia/nuxt",
+    "nuxt-auth-utils",
   ],
   primevue: {
     unstyled: true,
