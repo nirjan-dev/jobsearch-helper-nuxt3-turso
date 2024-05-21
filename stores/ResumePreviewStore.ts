@@ -1,5 +1,11 @@
+/* eslint-disable max-lines-per-function */
 import { defineStore } from "pinia";
-import type { Job, Project, ResumePreview } from "~/types/resume.types";
+import type {
+  Job,
+  Project,
+  ResumePreview,
+  ResumePreviewJob,
+} from "~/types/resume.types";
 
 export const useResumePreviewStore = defineStore(
   "resumePreviewStore",
@@ -12,6 +18,16 @@ export const useResumePreviewStore = defineStore(
       projects: resume.projects.map(getResumePreviewProject),
     });
 
+    const enabledSkills = computed(function computedEnabledSKills() {
+      return resumePreview.value.skills
+        ?.filter(function getEnabled(s) {
+          return s.isEnabled;
+        })
+        .map(function getSkillTitle(skill) {
+          return skill.name;
+        });
+    });
+
     function syncResumePreview() {
       const resume = useResumeStore().resume;
       resumePreview.value = {
@@ -22,9 +38,21 @@ export const useResumePreviewStore = defineStore(
       };
     }
 
+    function getEnabledAccomplishmentsFromJob(job: ResumePreviewJob) {
+      return job.accomplishments
+        .filter(function getEnabled(accomplishment) {
+          return accomplishment.isEnabled;
+        })
+        .map(function getAccomplishmentName(accomplishment) {
+          return accomplishment.name;
+        });
+    }
+
     return {
       resumePreview,
+      enabledSkills,
       syncResumePreview,
+      getEnabledAccomplishmentsFromJob,
     };
 
     function getResumePreviewJob(job: Job) {

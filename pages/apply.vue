@@ -14,9 +14,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: ["auth"],
-});
 const resumeStore = useResumeStore();
 const resumePreviewStore = useResumePreviewStore();
 
@@ -24,5 +21,23 @@ useAsyncData("loadResume", async function loadResume() {
   await resumeStore.loadResume();
 
   resumePreviewStore.syncResumePreview();
+});
+
+definePageMeta({
+  middleware: function applyPageMiddleware() {
+    const route = useRoute();
+
+    const importParam = route.query.import;
+    if (importParam) {
+      let decoded;
+
+      try {
+        decoded = JSON.parse(importParam as string);
+        useResumeStore().setResume(decoded);
+      } catch (error) {
+        throw new Error("Invalid import param");
+      }
+    }
+  },
 });
 </script>

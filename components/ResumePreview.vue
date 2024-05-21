@@ -1,7 +1,7 @@
 <template>
   <div
     id="resume-preview"
-    class="mx-auto px-6 py-4 max-h-[89vh] overflow-auto sticky top-0"
+    class="mx-auto px-6 py-4 screen:max-h-[89vh] screen:overflow-auto sticky top-0"
   >
     <div class="grid mb-4">
       <h2 class="text-center text-4xl font-bold">{{ resume.name }}</h2>
