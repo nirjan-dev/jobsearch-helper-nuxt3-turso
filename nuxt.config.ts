@@ -1,6 +1,12 @@
+import { $fetch } from "ofetch";
 import path from "path";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  nitro: {
+    experimental: {
+      tasks: true,
+    },
+  },
   devtools: { enabled: true },
   modules: [
     "@nuxtjs/eslint-module",
@@ -20,6 +26,8 @@ export default defineNuxtConfig({
       backendUrl: "",
       frontendUrl: "",
     },
+    dbAuthToken: "",
+    dbUrl: "",
   },
 
   experimental: {

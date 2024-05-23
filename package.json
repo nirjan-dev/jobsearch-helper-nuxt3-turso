@@ -11,10 +11,17 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "prepare": "husky || true",
-    "commit": "cz"
+    "commit": "cz",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrate-prod": "NODE_ENV=production drizzle-kit migrate"
   },
   "dependencies": {
+    "@libsql/client": "^0.6.0",
     "@sparticuz/chromium": "119.0.0",
+    "better-sqlite3": "^10.0.0",
+    "drizzle-kit": "^0.21.2",
+    "drizzle-orm": "^0.30.10",
     "nuxt": "^3.10.3",
     "nuxt-auth-utils": "^0.0.25",
     "primeicons": "^6.0.1",
