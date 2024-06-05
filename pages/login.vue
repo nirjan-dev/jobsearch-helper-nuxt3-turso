@@ -13,7 +13,9 @@
             >
           </Button>
           <Button label="Continue with Github"
-            ><a class="flex items-center gap-2" href="/api/auth/github"
+            ><a
+              class="flex items-center gap-2"
+              :href="useNkAuth().getNkAuthLoginLink('github')"
               ><i class="pi pi-github"></i> Continue with Github</a
             >
           </Button>

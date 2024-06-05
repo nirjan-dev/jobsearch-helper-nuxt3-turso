@@ -7,18 +7,27 @@ export default defineNuxtConfig({
       tasks: true,
     },
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   modules: [
     "@nuxtjs/eslint-module",
     "@nuxtjs/stylelint-module",
     "@nuxtjs/tailwindcss",
     "nuxt-primevue",
     "@pinia/nuxt",
-    "nuxt-auth-utils",
   ],
   primevue: {
     unstyled: true,
     importPT: { from: path.resolve(__dirname, "./presets/wind/") }, //import and apply preset
+  },
+
+  nkAuth: {
+    providers: ["github"],
   },
 
   runtimeConfig: {
@@ -28,6 +37,12 @@ export default defineNuxtConfig({
     },
     dbAuthToken: "",
     dbUrl: "",
+    oauth: {
+      github: {
+        clientId: "",
+        clientSecret: "",
+      },
+    },
   },
 
   experimental: {

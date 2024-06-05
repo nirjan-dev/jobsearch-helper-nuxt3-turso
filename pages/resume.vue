@@ -39,6 +39,6 @@ async function onFormSave() {
 }
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["nkAuthGuard"],
 });
 </script>
