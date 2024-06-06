@@ -9,6 +9,7 @@ export const users = sqliteTable("users", {
     .default(sql`(unixepoch())`),
   email: text("email").notNull(),
   oauthProviderId: text("oauth_provider_id").unique(),
+  oauthProvider: text("oauth_provider"),
 });
 
 export const resumes = sqliteTable("resumes", {

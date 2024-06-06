@@ -7,30 +7,48 @@ import {
   addRouteMiddleware,
 } from "nuxt/kit";
 
+export type Provider = "google" | "github";
+
+export interface NkAuthModuleOptions {
+  providers: Provider[];
+}
+
 // dependencies: lucia, @lucia-auth/adapter-drizzle, arctic, drizzle-orm
-export default defineNuxtModule({
+export default defineNuxtModule<NkAuthModuleOptions>({
   meta: {
     name: "nkAuth",
     configKey: "nkAuth",
     compatibility: {
       nuxt: "^3.0.0",
     },
-    version: "0.1.0",
+    version: "0.2.0",
   },
 
   setup(moduleOptions, _nuxt) {
     const logger = useLogger("nkAuth");
     logger.info("Setting up nkAuth");
 
-    if (moduleOptions.providers.includes("github")) {
-      const githubClientID = process.env.NUXT_OAUTH_GITHUB_CLIENT_ID;
-      const githubClientSecret = process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET;
+    moduleOptions.providers.forEach(
+      function validateProviderCredentials(provider) {
+        logger.info(`Enabling ${provider} OAuth provider`);
 
-      if (!githubClientID || !githubClientSecret) {
-        logger.error(
-          "Github OAuth credentials are not configured. Please set NUXT_OAUTH_GITHUB_CLIENT_ID and NUXT_OAUTH_GITHUB_CLIENT_SECRET in your .env file",
-        );
-      }
+        const providerClientID =
+          process.env[`NUXT_OAUTH_${provider.toUpperCase()}_CLIENT_ID`];
+        const providerClientSecret =
+          process.env[`NUXT_OAUTH_${provider.toUpperCase()}_CLIENT_SECRET`];
+
+        if (!providerClientID || !providerClientSecret) {
+          logger.error(
+            `${provider} OAuth credentials are not configured. Please set NUXT_OAUTH_${provider.toUpperCase()}_CLIENT_ID and NUXT_OAUTH_${provider.toUpperCase()}_CLIENT_SECRET in your .env file`,
+          );
+        }
+      },
+    );
+
+    if (!process.env.NUXT_CLIENT_URL) {
+      logger.error(
+        "NUXT_CLIENT_URL is not configured. Please set it in your .env file",
+      );
     }
 
     const resolver = createResolver(import.meta.url);

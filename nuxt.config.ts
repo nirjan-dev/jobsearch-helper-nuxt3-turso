@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   },
 
   nkAuth: {
-    providers: ["github"],
+    providers: ["github", "google"],
   },
 
   runtimeConfig: {
@@ -39,6 +39,10 @@ export default defineNuxtConfig({
     dbUrl: "",
     oauth: {
       github: {
+        clientId: "",
+        clientSecret: "",
+      },
+      google: {
         clientId: "",
         clientSecret: "",
       },

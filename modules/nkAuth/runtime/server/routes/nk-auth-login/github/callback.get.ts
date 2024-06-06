@@ -1,10 +1,15 @@
-import { H3Event } from "h3";
 import { OAuth2RequestError } from "arctic";
-import { eq } from "drizzle-orm";
-import { lucia } from "~/modules/nkAuth/lib/lucia";
-import { getGithubClient } from "~/modules/nkAuth/lib/providers/github";
-import { useRuntimeConfig } from "#imports";
-import { db, usersTable } from "~/server/utils/nkAuthDBAdapter";
+
+import {
+  createNewUser,
+  getExistingUserFromEmail,
+  updateUserOauthProvider,
+} from "~/modules/nkAuth/lib/dbHelpers";
+import {
+  getOAuthClient,
+  isCookieStateAndQueryParamStateDifferent,
+  setUserSession,
+} from "~/modules/nkAuth/lib/oAuthLoginHelpers";
 
 interface GithubUser {
   id: string;
@@ -12,7 +17,7 @@ interface GithubUser {
   email: string;
 }
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity, max-lines-per-function
 export default defineEventHandler(async function githubCallbackHandler(event) {
   const query = getQuery(event);
   const code = query.code?.toString();
@@ -25,28 +30,32 @@ export default defineEventHandler(async function githubCallbackHandler(event) {
     });
   }
 
-  if (isCookieStateAndQueryParamStateDifferent(event, state)) {
+  if (isCookieStateAndQueryParamStateDifferent(event, state, "github")) {
     throw createError({
       status: 400,
       message: "Invalid state on github callback",
     });
   }
 
-  const oAuthConfig = useRuntimeConfig().oauth;
+  let githubOAuthClient;
 
-  const githubConfig = oAuthConfig.github;
-  if (!githubConfig || !githubConfig.clientId || !githubConfig.clientSecret) {
-    createError({
-      statusCode: 500,
-      statusMessage: "Github OAuth credentials are not configured",
+  try {
+    githubOAuthClient = getOAuthClient("github");
+    if (!githubOAuthClient) {
+      throw createError({
+        status: 500,
+        message: "OAuth client not found",
+      });
+    }
+  } catch (error) {
+    throw createError({
+      status: 500,
+      message: "Github OAuth credentials are not configured",
+      cause: error,
     });
-    return;
   }
 
-  const githubOAuthClient = getGithubClient(
-    githubConfig.clientId,
-    githubConfig.clientSecret,
-  );
+  let dbUser;
 
   try {
     const tokens = await githubOAuthClient.validateAuthorizationCode(code);
@@ -57,17 +66,28 @@ export default defineEventHandler(async function githubCallbackHandler(event) {
       },
     });
 
-    const existingUser = await checkExistingUser(githubUser);
+    dbUser = await getExistingUserFromEmail(githubUser.email);
 
-    if (!existingUser) {
-      const userId = crypto.randomUUID();
-
-      await createNewUser(userId, githubUser);
-      setUserSession(userId, event);
-    } else {
-      setUserSession(existingUser.id, event);
+    if (!dbUser) {
+      dbUser = await createNewUser({
+        id: githubUser.id,
+        email: githubUser.email,
+        provider: "github",
+      });
     }
-    return sendRedirect(event, "/");
+
+    if (dbUser.oauthProviderId !== githubUser.id) {
+      try {
+        await updateUserOauthProvider(dbUser.id, githubUser.id, "github");
+      } catch (error) {
+        throw createError({
+          status: 500,
+          message:
+            "Something went wrong on updating existing user's provider ID",
+          cause: error,
+        });
+      }
+    }
   } catch (e) {
     if (e instanceof OAuth2RequestError) {
       throw createError({
@@ -76,47 +96,13 @@ export default defineEventHandler(async function githubCallbackHandler(event) {
       });
     }
 
-    console.error(e);
-
     throw createError({
       status: 500,
       message: "Something went wrong on github callback",
       cause: e,
     });
   }
+
+  setUserSession(dbUser.id, event);
+  return sendRedirect(event, "/");
 });
-
-async function createNewUser(userId: string, githubUser: GithubUser) {
-  await db.insert(usersTable).values({
-    id: userId,
-    oauthProviderId: githubUser.id,
-    email: githubUser.email,
-    createdAt: new Date(),
-  });
-}
-
-async function checkExistingUser(githubUser: GithubUser) {
-  return await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.oauthProviderId, githubUser.id))
-    .get();
-}
-
-async function setUserSession(userId: string, event: H3Event) {
-  const session = await lucia.createSession(userId, {});
-  appendHeader(
-    event,
-    "Set-Cookie",
-    lucia.createSessionCookie(session.id).serialize(),
-  );
-}
-
-function isCookieStateAndQueryParamStateDifferent(
-  event: H3Event,
-  state: string | undefined,
-) {
-  const storedState = getCookie(event, "github_oauth_state");
-
-  return !state || !storedState || state !== storedState;
-}

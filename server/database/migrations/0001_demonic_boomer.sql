@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `oauth_provider` text;

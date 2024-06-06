@@ -1,5 +1,6 @@
 import type { User } from "lucia";
 import { useState } from "#imports";
+import type { Provider } from "~/modules/nkAuth";
 
 function getInitialUserState() {
   return null;
@@ -26,9 +27,7 @@ export function useNkAuth() {
     }
   }
 
-  type Providers = "google" | "github";
-
-  function getNkAuthLoginLink(provider: Providers) {
+  function getNkAuthLoginLink(provider: Provider) {
     return `/nk-auth-login/${provider}`;
   }
 

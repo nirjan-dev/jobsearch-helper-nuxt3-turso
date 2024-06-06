@@ -8,8 +8,11 @@
       <template #content>
         <div class="flex flex-col gap-4 justify-center">
           <Button label="Continue with Google"
-            ><a class="flex items-center gap-2" href="/api/auth/google"
-              ><i class="pi pi-google"></i> Continue with Google</a
+            ><a
+              class="flex items-center gap-2"
+              :href="useNkAuth().getNkAuthLoginLink('google')"
+            >
+              <i class="pi pi-google"></i> Continue with Google</a
             >
           </Button>
           <Button label="Continue with Github"
