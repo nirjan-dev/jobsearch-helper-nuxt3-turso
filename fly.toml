@@ -1,24 +1,25 @@
-# fly.toml app configuration file generated for jobsearch-frontend on 2024-03-11T11:24:54+05:45
+# fly.toml app configuration file generated for jobsearch-app on 2024-06-07T11:03:02+05:45
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'jobsearch-frontend'
+app = 'jobsearch-app'
 primary_region = 'bos'
 
 [build]
+
+[env]
+NUXT_CLIENT_URL = 'https://jobsearch.nirjan.net'
 
 [http_service]
 internal_port = 3000
 force_https = true
 auto_stop_machines = true
 auto_start_machines = true
-min_machines_running = 1
 processes = ['app']
-
-[env]
-NUXT_PUBLIC_BACKEND_URL = "https://jobsearch-api.nirjan.net"
-NUXT_PUBLIC_FRONTEND_URL = "https://jobsearch.nirjan.net"
 
 [[vm]]
 size = 'shared-cpu-1x'
+
+[deploy]
+release_command = "npm run db:migrate-prod"
