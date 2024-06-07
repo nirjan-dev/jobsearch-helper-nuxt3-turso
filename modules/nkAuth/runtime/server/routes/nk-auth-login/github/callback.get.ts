@@ -103,6 +103,6 @@ export default defineEventHandler(async function githubCallbackHandler(event) {
     });
   }
 
-  setUserSession(dbUser.id, event);
+  await setUserSession(dbUser.id, event);
   return sendRedirect(event, "/");
 });

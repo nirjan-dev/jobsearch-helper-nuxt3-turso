@@ -20,6 +20,3 @@ processes = ['app']
 
 [[vm]]
 size = 'shared-cpu-1x'
-
-[deploy]
-release_command = "npm run db:migrate-prod"

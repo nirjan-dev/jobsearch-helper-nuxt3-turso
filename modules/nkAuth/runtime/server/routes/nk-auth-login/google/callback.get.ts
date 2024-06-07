@@ -122,6 +122,6 @@ export default defineEventHandler(async function googleCallbackHandler(event) {
     });
   }
 
-  setUserSession(dbUser.id, event);
+  await setUserSession(dbUser.id, event);
   return sendRedirect(event, "/");
 });
