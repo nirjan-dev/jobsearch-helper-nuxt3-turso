@@ -1,5 +1,5 @@
 {
-  "name": "jobsearch",
+  "name": "jobsearch-nuxt-turso",
   "private": true,
   "type": "module",
   "scripts": {
